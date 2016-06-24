@@ -91,4 +91,8 @@ $(document).ready( function() {
 		var tags = $(this).find("input[name='tags']").val();
 		getUnanswered(tags);
 	});
-});
+	
+	
+	
+	
+}); // end of jQuery
