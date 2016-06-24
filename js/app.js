@@ -92,7 +92,14 @@ $(document).ready( function() {
 		getUnanswered(tags);
 	});
 	
-	
+	$('.inspiration-getter').submit( function(e){
+		e.preventDefault();
+		// zero out results if previous search has run
+		$('.results').html('');
+		// get the value of the tags the user submitted
+		var answerers = $(this).find("input[name='answerers']").val();
+		getInspiration(answerers);
+	});
 	
 	
 }); // end of jQuery
