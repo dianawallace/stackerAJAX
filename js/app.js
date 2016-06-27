@@ -1,3 +1,4 @@
+// Unanswered questions search
 // this function takes the question object returned by the StackOverflow request
 // and returns new result to be appended to DOM
 var showQuestion = function(question) {
@@ -59,7 +60,7 @@ var getUnanswered = function(tags) {
 	};
 	
 	$.ajax({
-		url: "http://api.stackexchange.com/2.2/questions/unanswered",
+		url: "https://api.stackexchange.com/2.2/questions/unanswered",
 		data: request,
 		dataType: "jsonp",//use jsonp to avoid cross origin issues
 		type: "GET",
@@ -81,6 +82,13 @@ var getUnanswered = function(tags) {
 	});
 };
 
+// Top answerers search on StackOverflow 
+
+var getInspiration = function(answerers) {
+
+
+
+};
 
 $(document).ready( function() {
 	$('.unanswered-getter').submit( function(e){
@@ -96,7 +104,7 @@ $(document).ready( function() {
 		e.preventDefault();
 		// zero out results if previous search has run
 		$('.results').html('');
-		// get the value of the tags the user submitted
+		// get the value of the answerers the user submitted
 		var answerers = $(this).find("input[name='answerers']").val();
 		getInspiration(answerers);
 	});
