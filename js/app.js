@@ -83,9 +83,45 @@ var getUnanswered = function(tags) {
 };
 
 // Top answerers search on StackOverflow 
+var showUser = function(answerers) {
+	
+	// clone our result template code
+	var result = $('.templates .user').clone();
+	
+	// Show the answerers name in result
+	var displayName = result.find('.display-name a');
+	displayName.attr('href', answerers.user.link);
+	displayName.text(answerers.user.display_name);
+	
+	// show answerers reputation in result
+	result.find('.reputation').text(answerers.user.reputation);
+	
+	// show answerers post count in result
+	result.find('.post-count').text(answerers.user.post-count);
+	
+	// show answerers score in result
+	result.find('.score').text(answerers.user.post-count);
+	
+	return result;
+	
+}
 
+
+// search top answerers 
 var getInspiration = function(answerers) {
 
+	var request = {
+		tagged: answerers, 
+		period: month,
+		site: 'stackoverflow'
+	};
+	
+	$.ajax({
+		url: "https://api.stackexchange.com/2.2/tags/" + request.tag + '/top-answerers/' + request.period,
+		data: request,
+		dataType: "jsonp",//use jsonp to avoid cross origin issues
+		type: "GET",
+	})
 
 
 };
