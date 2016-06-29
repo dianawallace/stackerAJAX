@@ -102,12 +102,12 @@ var showUser = function(answerers) {
 	
 	// show answerers post count in result
 	result.find('.post_count').text(answerers.user.post_count);
-	//console.log(post_count);
+	console.log(post_count);
 	// show answerers score in result
 	result.find('.score').text(answerers.user.score);
-	//console.log(score);
-	return result;
+	console.log(score);
 	
+	return result;
 };
 
 
