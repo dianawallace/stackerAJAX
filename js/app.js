@@ -22,6 +22,7 @@ var showQuestion = function(question) {
 
 	// set some properties related to asker
 	var asker = result.find('.asker');
+	console.log(asker);
 	asker.html('<p>Name: <a target="_blank" '+
 		'href=http://stackoverflow.com/users/' + question.owner.user_id + ' >' +
 		question.owner.display_name +
@@ -30,6 +31,7 @@ var showQuestion = function(question) {
 	);
 
 	return result;
+	
 };
 
 
@@ -89,30 +91,33 @@ var showUser = function(answerers) {
 	var result = $('.templates .user').clone();
 	
 	// Show the answerers name in result
-	var displayName = result.find('.display-name a');
+	var displayName = result.find('.display_name a');
 	displayName.attr('href', answerers.user.link);
 	displayName.text(answerers.user.display_name);
-	
+	result.find('.display_name').text(answerers.user.display_name);
+	console.log(answerers);
+	//console.log(display_name);
 	// show answerers reputation in result
 	result.find('.reputation').text(answerers.user.reputation);
 	
 	// show answerers post count in result
-	result.find('.post-count').text(answerers.user.post-count);
-	
+	result.find('.post_count').text(answerers.user.post_count);
+	//console.log(post_count);
 	// show answerers score in result
-	result.find('.score').text(answerers.user.post-count);
-	
+	result.find('.score').text(answerers.user.score);
+	//console.log(score);
 	return result;
 	
-}
+};
 
 
 // search top answerers 
 var getInspiration = function(answerers) {
 
+	// the parameters we need to pass in our request to StackOverflow's API
 	var request = {
-		tagged: answerers, 
-		period: month,
+		tag: answerers, 
+		period: 'month',
 		site: 'stackoverflow'
 	};
 	
@@ -122,7 +127,22 @@ var getInspiration = function(answerers) {
 		dataType: "jsonp",//use jsonp to avoid cross origin issues
 		type: "GET",
 	})
+	
+	.done(function(result){ //this waits for the ajax to return with a succesful promise object
+		var searchResults = showSearchResults(request.tag, result.items.length);
 
+		$('.search-results').html(searchResults);
+		//$.each is a higher order function. It takes an array and a function as an argument.
+		//The function is executed once for each item in the array.
+		$.each(result.items, function(i, item) {
+			var topUsers = showUser(item);
+			$('.results').append(topUsers);
+		});
+	})
+	.fail(function(jqXHR, error){ //this waits for the ajax to return with an error promise object
+		var errorElem = showError(error);
+		$('.search-results').append(errorElem);
+	});
 
 };
 
@@ -140,7 +160,7 @@ $(document).ready( function() {
 		e.preventDefault();
 		// zero out results if previous search has run
 		$('.results').html('');
-		// get the value of the answerers the user submitted
+		// get the value of the tags the user submitted
 		var answerers = $(this).find("input[name='answerers']").val();
 		getInspiration(answerers);
 	});
