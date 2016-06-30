@@ -22,8 +22,8 @@ var showQuestion = function(question) {
 
 	// set some properties related to asker
 	var asker = result.find('.asker');
-	console.log(asker);
-	asker.html('<p>Name: <a target="_blank" '+
+	
+	asker.html('<p>/Name: <a target="_blank" '+
 		'href=http://stackoverflow.com/users/' + question.owner.user_id + ' >' +
 		question.owner.display_name +
 		'</a></p>' +
@@ -91,21 +91,27 @@ var showUser = function(answerers) {
 	var result = $('.templates .user').clone();
 	
 	// Show the answerers name in result
-	var displayName = result.find('.display_name a');
-	displayName.attr('href', answerers.user.link);
-	displayName.text(answerers.user.display_name);
-	result.find('.display_name').text(answerers.user.display_name);
+	var displayName = result.find('.display_name');
+	//isplayName.attr('href', answerers.user.link);
+	displayName.html('<a target="_blank" href="http://stackoverflow.com/users/' + answerers.user.user_id + '/' + answerers.user.display_name +'">'+ answerers.user.display_name +'" </a>');
+	
+//	result.find('.display_name').text(answerers.user.display_name);
+	
+	//displayName.html('<p>/Name: <a target="_blank" '+
+	//	'href=http://stackoverflow.com/users/' + 
+	//	answerers.user.display_name + '</a></p>');
+
 	console.log(answerers);
-	//console.log(display_name);
+	
 	// show answerers reputation in result
 	result.find('.reputation').text(answerers.user.reputation);
 	
 	// show answerers post count in result
-	result.find('.post_count').text(answerers.user.post_count);
-	console.log(post_count);
+	result.find('.post_count').text(answerers.post_count);
+	
 	// show answerers score in result
-	result.find('.score').text(answerers.user.score);
-	console.log(score);
+	result.find('.score').text(answerers.score);
+	
 	
 	return result;
 };
